@@ -10,9 +10,6 @@ public class Vacancy {
     private String description;
     private LocalDateTime creationDate;
 
-    public Vacancy(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
 
     public Vacancy(int id, String title, String description, LocalDateTime creationDate) {
         this.id = id;
