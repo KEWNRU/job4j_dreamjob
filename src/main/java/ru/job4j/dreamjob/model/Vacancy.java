@@ -6,10 +6,13 @@ import java.util.Objects;
 public class Vacancy {
 
     private int id;
-
     private String title;
     private String description;
     private LocalDateTime creationDate;
+
+    public Vacancy(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public Vacancy(int id, String title, String description, LocalDateTime creationDate) {
         this.id = id;
