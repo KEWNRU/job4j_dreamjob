@@ -26,7 +26,7 @@ public class MemoryCandidateRepository implements CandidateRepository {
     @Override
     public Candidate save(Candidate candidate) {
         candidate.setId(nextId++);
-        candidate.setData(LocalDateTime.now());
+        candidate.setCreationDate(LocalDateTime.now());
         candidates.put(candidate.getId(), candidate);
         return candidate;
     }
@@ -39,7 +39,7 @@ public class MemoryCandidateRepository implements CandidateRepository {
     @Override
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(),
-                (id, oldCandidates) -> new Candidate(oldCandidates.getId(), candidate.getName(),
+                (id, oldCandidates) -> new Candidate(oldCandidates.getId(), candidate.getTitle(),
                         candidate.getDescription(),
                         candidate.getFileId(), candidate.getVisible())) != null;
     }

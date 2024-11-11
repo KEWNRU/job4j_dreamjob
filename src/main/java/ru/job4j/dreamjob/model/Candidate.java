@@ -1,22 +1,33 @@
 package ru.job4j.dreamjob.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class Candidate {
+
+    public static final Map<String, String> COLUMN_MAPPING = Map.of(
+            "id", "id",
+            "title", "title",
+            "description", "description",
+            "creation_date", "creationDate",
+            "file_id", "fileId",
+            "visible", "visible"
+    );
+
     private int id;
-    private String name;
+    private String title;
     private String description;
-    private LocalDateTime data;
+    private LocalDateTime creationDate = LocalDateTime.now();
     private int fileId;
     private boolean visible;
 
-    public Candidate(int id, String name, String description, int fileId, boolean visible) {
+    public Candidate(int id, String title, String description, int fileId, boolean visible) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.fileId = fileId;
         this.visible = visible;
-        data = LocalDateTime.now();
+        creationDate = LocalDateTime.now();
     }
 
     public Candidate() {
@@ -46,12 +57,12 @@ public class Candidate {
         this.id = id;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getDescription() {
@@ -62,11 +73,11 @@ public class Candidate {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
