@@ -22,7 +22,7 @@ public class Vacancy {
 
     private String description;
 
-    private LocalDateTime creationDate = LocalDateTime.now();
+    private LocalDateTime creationDate;
 
     private boolean visible;
 
@@ -38,7 +38,7 @@ public class Vacancy {
         this.visible = visible;
         this.cityId = cityId;
         this.fileId = fileId;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = creationDate;
     }
 
     public Vacancy() {

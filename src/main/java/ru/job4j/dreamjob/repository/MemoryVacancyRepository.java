@@ -22,11 +22,11 @@ public class MemoryVacancyRepository implements VacancyRepository {
         save(new Vacancy(0, "Intern Java Developer", "test", true, 1, 0));
         save(new Vacancy(0, "Junior Java Developer", "test", true, 3, 0));
         save(new Vacancy(0, "Junior+ Java Developer", "test", true, 1, 0));
-        save(new Vacancy(0, "Middle Java Developer", "test",  true, 1, 0));
+        save(new Vacancy(0, "Middle Java Developer", "test", true, 1, 0));
         save(new Vacancy(0, "Middle+ Java Developer", "test", true, 1, 0));
         save(new Vacancy(0, "Senior Java Developer", "test", true, 2, 0));
         save(new Vacancy(0, "Senior+ Java Developer", "test", true, 1, 0));
-        save(new Vacancy(0, "Senior++ Java Developer", "test",  true, 1, 0));
+        save(new Vacancy(0, "Senior++ Java Developer", "test", true, 1, 0));
     }
 
 
@@ -48,7 +48,7 @@ public class MemoryVacancyRepository implements VacancyRepository {
         return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) -> {
             return new Vacancy(
                     oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(),
-                     vacancy.getVisible(), vacancy.getCityId(), vacancy.getFileId()
+                    vacancy.getVisible(), vacancy.getCityId(), vacancy.getFileId()
             );
         }) != null;
     }
