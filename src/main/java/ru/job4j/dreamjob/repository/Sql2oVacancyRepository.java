@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.Vacancy;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
             var query = connection.createQuery(sql, true)
                     .addParameter("title", vacancy.getTitle())
                     .addParameter("description", vacancy.getDescription())
-                    .addParameter("creationDate", vacancy.getCreationDate())
+                    .addParameter("creationDate", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                     .addParameter("visible", vacancy.getVisible())
                     .addParameter("cityId", vacancy.getCityId())
                     .addParameter("fileId", vacancy.getFileId());
@@ -57,7 +59,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
             var query = connection.createQuery(sql)
                     .addParameter("title", vacancy.getTitle())
                     .addParameter("description", vacancy.getDescription())
-                    .addParameter("creationDate", vacancy.getCreationDate())
+                    .addParameter("creationDate", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                     .addParameter("visible", vacancy.getVisible())
                     .addParameter("cityId", vacancy.getCityId())
                     .addParameter("fileId", vacancy.getFileId())

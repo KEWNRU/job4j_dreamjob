@@ -5,6 +5,7 @@ import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.Candidate;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -26,9 +27,9 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             var query = connection.createQuery(sql, true)
                     .addParameter("title", candidate.getTitle())
                     .addParameter("description", candidate.getDescription())
-                    .addParameter("creationDate", candidate.getCreationDate())
-                    .addParameter("visible", candidate.getVisible())
-                    .addParameter("fileId", candidate.getFileId());
+                    .addParameter("creationDate", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                    .addParameter("fileId", candidate.getFileId())
+                    .addParameter("visible", candidate.getVisible());
             int generatedId = query.executeUpdate().getKey(Integer.class);
             candidate.setId(generatedId);
             return candidate;
@@ -40,9 +41,8 @@ public class Sql2oCandidateRepository implements CandidateRepository {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("DELETE FROM candidates WHERE id = :id");
             query.addParameter("id", id);
-            query.executeUpdate();
+            return query.executeUpdate().getResult() > 0;
         }
-        return true;
     }
 
     @Override
@@ -57,12 +57,11 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             var query = connection.createQuery(sql)
                     .addParameter("title", candidate.getTitle())
                     .addParameter("description", candidate.getDescription())
-                    .addParameter("creationDate", candidate.getCreationDate())
+                    .addParameter("creationDate", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                     .addParameter("visible", candidate.getVisible())
                     .addParameter("fileId", candidate.getFileId())
                     .addParameter("id", candidate.getId());
-            var affectedRows = query.executeUpdate().getResult();
-            return affectedRows > 0;
+            return query.executeUpdate().getResult() > 0;
         }
     }
 
