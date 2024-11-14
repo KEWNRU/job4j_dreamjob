@@ -91,16 +91,11 @@ public class Candidate {
         if (!(o instanceof Candidate candidate)) {
             return false;
         }
-        return getId() == candidate.getId()
-                && getVisible() == candidate.getVisible()
-                && getFileId() == candidate.getFileId()
-                && Objects.equals(getTitle(), candidate.getTitle())
-                && Objects.equals(getDescription(), candidate.getDescription())
-                && Objects.equals(getCreationDate(), candidate.getCreationDate());
+        return getId() == candidate.getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getDescription(), getCreationDate(), getVisible(), getFileId());
+        return Objects.hash(getId());
     }
 }
