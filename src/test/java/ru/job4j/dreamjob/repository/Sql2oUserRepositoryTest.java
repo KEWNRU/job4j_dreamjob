@@ -66,7 +66,7 @@ class Sql2oUserRepositoryTest {
     @Test
     public void whenDuplicateUserThrowsException() {
         User user = new User(0, "Kewn21rus", "Ivan", "n0kky21rus@gmail.com");
-        var saveUser = sql2oUserRepository.save(user);
+        sql2oUserRepository.save(user);
         assertThatThrownBy(() -> sql2oUserRepository.save(user))
                 .isInstanceOf(Sql2oUserRepository.DuplicateKeyException.class)
                 .hasMessageContaining("Пользовотель с такой почтой зарегестрирован");
