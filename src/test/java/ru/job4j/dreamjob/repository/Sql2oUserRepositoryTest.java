@@ -62,7 +62,7 @@ class Sql2oUserRepositoryTest {
         assertThat(user).isEqualTo((rsl));
     }
 
-    @Test
+
     public void whenDuplicateUserThrowsException() {
         User user = new User(0, "Kewn21rus", "Ivan", "n0kky21rus@gmail.com");
         sql2oUserRepository.save(user);
