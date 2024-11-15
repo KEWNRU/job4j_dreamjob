@@ -64,10 +64,10 @@ public class User {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof User user)){
+        if (!(o instanceof User user)) {
             return false;
         }
-        return getId() == user.getId() && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getName(), user.getName()) && Objects.equals(getPassword(), user.getPassword());
+        return getId() == user.getId() && Objects.equals(getEmail(), user.getEmail());
     }
 
     @Override
