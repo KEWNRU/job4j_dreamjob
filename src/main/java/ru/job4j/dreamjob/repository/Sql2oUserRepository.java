@@ -3,6 +3,7 @@ package ru.job4j.dreamjob.repository;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.User;
 
@@ -27,6 +28,10 @@ public class Sql2oUserRepository implements UserRepository {
                     .addParameter("password", user.getPassword());
             int generatedId = query.executeUpdate().getKey(Integer.class);
             user.setId(generatedId);
+        } catch (Sql2oException e) {
+            if (e.getMessage().contains("duplicate key") || e.getMessage().contains("Нарушение уникального индекса или первичного ключа")) {
+                throw new DuplicateKeyException("Пользовотель с такой почтой зарегестрирован");
+            }
         }
         return Optional.of(user);
     }
@@ -58,6 +63,10 @@ public class Sql2oUserRepository implements UserRepository {
             return query.setColumnMappings(User.COLUMN_MAPPING).executeAndFetch(User.class);
         }
     }
-
+    public static class DuplicateKeyException extends RuntimeException {
+        public DuplicateKeyException(String message) {
+            super(message);
+        }
+    }
 
 }

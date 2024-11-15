@@ -10,6 +10,7 @@ import ru.job4j.dreamjob.model.User;
 import java.util.Properties;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class Sql2oUserRepositoryTest {
 
@@ -60,5 +61,14 @@ class Sql2oUserRepositoryTest {
         var user = sql2oUserRepository.save(new User(0, "Kewn21rus", "Ivan", "n0kky21rus@gmail.com"));
         var rsl = sql2oUserRepository.findByEmailAndPassword("n0kky21rus@gmail.com", "Kewn21rus");
         assertThat(user).isEqualTo((rsl));
+    }
+
+    @Test
+    public void whenDuplicateUserThrowsException() {
+        User user = new User(0, "Kewn21rus", "Ivan", "n0kky21rus@gmail.com");
+        var saveUser = sql2oUserRepository.save(user);
+        assertThatThrownBy(() -> sql2oUserRepository.save(user))
+                .isInstanceOf(Sql2oUserRepository.DuplicateKeyException.class)
+                .hasMessageContaining("Пользовотель с такой почтой зарегестрирован");
     }
 }
