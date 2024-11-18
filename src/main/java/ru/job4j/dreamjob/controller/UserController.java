@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @ThreadSafe
 @Controller
 @RequestMapping("/users")
@@ -31,23 +34,43 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String getRegistrationPage(Model model) {
+    public String getRegistrationPage(Model model, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("user", new User());
         return "/users/register";
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Model model, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         return "users/login";
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model) {
+    public String loginUser(@ModelAttribute User user, Model model, HttpServletRequest request) {
         var userOptional = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "Почта или пароль введены неверно");
             return "users/login";
         }
+        var session = request.getSession();
+        session.setAttribute("user", userOptional.get());
         return "redirect:/vacancies";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/users/login";
     }
 }
