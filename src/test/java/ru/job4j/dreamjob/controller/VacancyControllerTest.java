@@ -33,13 +33,13 @@ public class VacancyControllerTest {
         vacancyService = mock(VacancyService.class);
         cityService = mock(CityService.class);
         vacancyController = new VacancyController(vacancyService, cityService);
-        testFile = new MockMultipartFile("testFile.img", new byte[] {1, 2, 3});
+        testFile = new MockMultipartFile("testFile.img", new byte[]{1, 2, 3});
     }
 
     @Test
     public void whenRequestVacancyListPageThenGetPageWithVacancies() {
-        var vacancy1 = new Vacancy(1, "test1", "desc1",true, 1, 2);
-        var vacancy2 = new Vacancy(2, "test2", "desc2",false, 3, 4);
+        var vacancy1 = new Vacancy(1, "test1", "desc1", true, 1, 2);
+        var vacancy2 = new Vacancy(2, "test2", "desc2", false, 3, 4);
         var expectedVacancies = List.of(vacancy1, vacancy2);
         when(vacancyService.findAll()).thenReturn(expectedVacancies);
 
@@ -109,7 +109,7 @@ public class VacancyControllerTest {
     }
 
     @Test
-    public void whenUpdateElements(){
+    public void whenUpdateElements() {
         var vacancy = new Vacancy(1, "test2", "desc2", true, 3, 4);
         when(vacancyService.update(any(), any())).thenReturn(true);
 
